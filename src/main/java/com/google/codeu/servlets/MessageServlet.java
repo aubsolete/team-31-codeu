@@ -47,7 +47,7 @@ public class MessageServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	System.out.println("Hi there!"); 
+
     response.setContentType("application/json");
 
     String user = request.getParameter("user");
