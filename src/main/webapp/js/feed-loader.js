@@ -10,7 +10,7 @@ function fetchMessages() {
         }
         else {
             messageContainer.innerHTML = '';
-        }
+        messageContainer.innerHTML  = messages.length == 0 ? '<p>There are no posts yet.</p>': '';
         messages.forEach((message) => {
             const messageDiv = buildMessageDiv(message);
             messageContainer.appendChild(messageDiv);
