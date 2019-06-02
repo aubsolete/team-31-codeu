@@ -25,7 +25,7 @@ function buildMessageDiv(message) {
 
     const timeDiv = document.createElement('div');
     timeDiv.classList.add('right-align');
-    timeDiv.appendChild(document.createTextNodeNode(new Date(message.timestamp)));
+    timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
 
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('message-header');
