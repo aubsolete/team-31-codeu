@@ -14,6 +14,12 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
  */
 function Index(props) {
   return (
+      // Why is there HTML in my javascript?
+      //
+      // This is called JSX. Its basically an extension to javascript that makes it easier to write markup in
+      // javascript. This must be converted to regular javascript in order for our code to run in the browser.
+      //
+      // Take a look at the react jsx documentation to learn more: https://reactjs.org/docs/introducing-jsx.html
       <div>
           <h1>CodeU Starter Project</h1>
           <p>This is the CodeU starter project. Click the links above to login and visit your page.
@@ -29,11 +35,12 @@ function About(props) {
   return (
     <div>
         <h1>About Our Team</h1>
-        <h2>Teammate A Name</h2>
+        <h2>Denise Chacanaca</h2>
         <ul>
-            <li>Summer Feelz: </li>
-            <li>Aspirational Hobby: </li>
-            <li>Ask me About: </li>
+            <li>Summer Feelz: empowering, happy, and exciting :D </li>
+            <li>Aspirational Hobby: My aspirational hobby is to dance. I love dancing, its a huge part of my culture
+                and community so I would love to get better at it! </li>
+            <li>Ask me About: True crime and Literature </li>
         </ul>
         <h2>Teammate B Name: Natalie </h2>
         <ul>
@@ -44,7 +51,9 @@ function About(props) {
         <h2>Aubree Dix</h2>
         <ul>
             <li>Summer Feelz: Sad, adventurous, and relieved!</li>
-            <li>Aspirational Hobby: I would spend all of my time and money learning how to ride a dragon. Yes, I know dragons don't exist, but GOT just ended and I don't know what to do with my emotions right now. (If this *must* be reality, I would learn how to fix up cars.)</li>
+            <li>Aspirational Hobby: I would spend all of my time and money learning how to ride a dragon. Yes, I know
+                dragons don't exist, but GOT just ended and I don't know what to do with my emotions right now.
+                (If this *must* be reality, I would learn how to fix up cars.)</li>
             <li>Ask me About: Maintaining a long-distance relationship.</li>
         </ul>
 
