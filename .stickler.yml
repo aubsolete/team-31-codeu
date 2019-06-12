@@ -1,0 +1,10 @@
+---
+linters:
+  eslint:
+    config: './frontend/eslint.config'
+    fixer: true
+  stylelint:
+    fixer: true
+
+fixers:
+  enable: true
