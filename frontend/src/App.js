@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Feed from './Feed';
 
 /**
  * The core building block of React is a component. A component can be declared two different ways.
@@ -83,11 +84,15 @@ class App extends React.Component {
                         <li>
                             <Link to="/about/">About Our Team</Link>
                         </li>
+                        <li>
+                            <Link to="/feed/">Feed</Link>
+                        </li>
                     </ul>
                 </nav>
 
                 <Route path="/" exact component={Index} />
                 <Route path="/about/" component={About} />
+                <Route path="/feed/" component={Feed} />
             </div>
         </Router>
     );
