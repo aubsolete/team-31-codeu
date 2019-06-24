@@ -30,14 +30,21 @@ limitations under the License.
         <li><a href="/aboutus.html">About Our Team</a></li>
       </ul>
     </nav>
+    <style>
+      /* Form is hidden by default. */
+      .hidden {
+        display: none;
+      }
+    </style>
     <h1 id="page-title">User Page</h1>
-
-    <form id="message-form" action="/messages" method="POST" class="hidden">
-      Enter a new message:
+	<form id="my-form" class="hidden" method="POST" enctype="multipart/form-data">
+      <p>Type some text:</p>
+      <textarea name="text"></textarea>
       <br/>
-      <textarea name="text" id="message-input"></textarea>
-      <br/>
-      <input type="submit" value="Submit">
+      <p>Upload an image:</p>
+      <input type="file" name="image">
+      <br/><br/>
+      <button>Submit</button>
     </form>
     <hr/>
 
