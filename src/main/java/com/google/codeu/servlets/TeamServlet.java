@@ -20,7 +20,7 @@ public class TeamServlet {
     // Note by Faisal: return a specific Team or list of Teams depending on the parameters in the request.
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String teamID = request.getParameter("id"); // Fetch the id.
+        String teamID = request.getParameter("teamID"); // Fetch the team's id.
         if (teamID == null || teamID.equals("")) {     // Request is empty...
             response.getWriter().println("[]");        // ...return empty array.
             return;
@@ -28,7 +28,9 @@ public class TeamServlet {
 
         // Fetch the team tied to the id from the datastore.
         Team team = teamDatastore.getById(teamID);
-        // Add check here after getById is constructed.
+        if(team == null) {
+            System.err.println("No team was found! :(");
+        }
 
         Gson gson = new Gson();
         String json = gson.toJson(team);
@@ -55,7 +57,7 @@ public class TeamServlet {
     }
 
     // Note by Faisal: edit an existing Team. The id of the Team to edit will be a request parameter.
-    public void doPut(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a team.
         String teamID = request.getParameter("teamID");
@@ -71,11 +73,6 @@ public class TeamServlet {
 
         // Team is set, now return it.
         response.getWriter().println(new Gson().toJson(team));
-    }
-
-    // Note by Faisal: delete an existing Team. The id of the Team to be deleted will be a request parameter.
-    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
-        // Leave empty.
     }
 
 }
