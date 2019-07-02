@@ -14,9 +14,18 @@ public class Team {
     // Constructors
     public Team() {}
 
-    public Team(UUID teamID, UUID cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
-        this.teamID = teamID;
+    public Team(UUID cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
+        this.teamID = UUID.randomUUID();
         this.cohortID = cohortID;
+        this.teamName = teamName;
+        this.projectName = projectName;
+        this.projectDesc = projectDesc;
+        this.githubLink = githubLink;
+    }
+
+    public Team(String teamID, String cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
+        this.teamID = UUID.fromString(teamID);
+        this.cohortID = UUID.fromString(cohortID);
         this.teamName = teamName;
         this.projectName = projectName;
         this.projectDesc = projectDesc;

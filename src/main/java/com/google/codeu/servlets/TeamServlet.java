@@ -29,7 +29,8 @@ public class TeamServlet {
         // Fetch the team tied to the id from the datastore.
         Team team = teamDatastore.getById(teamID);
         if(team == null) {
-            System.err.println("No team was found! :(");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
 
         Gson gson = new Gson();
