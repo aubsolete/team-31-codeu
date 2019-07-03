@@ -14,9 +14,9 @@ public class Team {
     // Constructors
     public Team() {}
 
-    public Team(UUID cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
+    public Team(String cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
         this.teamID = UUID.randomUUID();
-        this.cohortID = cohortID;
+        this.cohortID = UUID.fromString(cohortID);
         this.teamName = teamName;
         this.projectName = projectName;
         this.projectDesc = projectDesc;

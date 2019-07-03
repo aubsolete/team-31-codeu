@@ -40,11 +40,10 @@ public class CohortServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a cohort.
-        String cohortID = request.getParameter("cohortID");
         String cohortName = request.getParameter("cohortName");
 
         // Create a new Cohort with the acquired data.
-        Cohort cohort = cohortDatastore.create(new Cohort(cohortID, cohortName));
+        Cohort cohort = cohortDatastore.create(new Cohort(cohortName));
 
         // ID is now set, return it.
         response.getWriter().println(new Gson().toJson(cohort));

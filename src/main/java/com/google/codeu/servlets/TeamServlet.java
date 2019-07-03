@@ -42,7 +42,6 @@ public class TeamServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a team.
-        String teamID = request.getParameter("teamID");
         String cohortID = request.getParameter("cohortID");
         String teamName = request.getParameter("teamName");
         String projectName = request.getParameter("projectName");
@@ -50,7 +49,7 @@ public class TeamServlet {
         String githubLink = request.getParameter("githubLink");
 
         // Create a new Team with the acquired data.
-        Team team = teamDatastore.create(new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink));
+        Team team = teamDatastore.create(new Team(cohortID, teamName, projectName, projectDesc, githubLink));
 
         // ID is now set, return it.
         response.getWriter().println(new Gson().toJson(team));
