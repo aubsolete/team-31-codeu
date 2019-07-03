@@ -12,8 +12,6 @@ public class Team {
     private String githubLink;  // The Github link for this team's project, to be assigned upon creation of the repo.
 
     // Constructors
-    public Team() {}
-
     public Team(String cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
         this.teamID = UUID.randomUUID();
         this.cohortID = UUID.fromString(cohortID);

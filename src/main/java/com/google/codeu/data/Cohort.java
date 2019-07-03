@@ -8,8 +8,6 @@ public class Cohort {
     private String cohortName;    // The name of this cohort, to be assigned manually.
 
     // Constructors
-    public Cohort() {}
-
     public Cohort(String cohortName) {
         this.cohortID = UUID.randomUUID();
         this.cohortName = cohortName;
