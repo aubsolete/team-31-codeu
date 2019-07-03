@@ -2,8 +2,7 @@ package com.google.codeu.data;
 
 import java.util.UUID;
 
-public class TeamModel {
-
+public class Team {
 
     private UUID teamID;        // The ID of this team, assigned by the database upon creation.
     private UUID cohortID;      // The ID of this team's cohort, also connected to a database.
@@ -11,6 +10,27 @@ public class TeamModel {
     private String projectName; // The name of this team's project, to be assigned manually.
     private String projectDesc; // The description of this team's project, to be assigned manually.
     private String githubLink;  // The Github link for this team's project, to be assigned upon creation of the repo.
+
+    // Constructors
+    public Team() {}
+
+    public Team(UUID cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
+        this.teamID = UUID.randomUUID();
+        this.cohortID = cohortID;
+        this.teamName = teamName;
+        this.projectName = projectName;
+        this.projectDesc = projectDesc;
+        this.githubLink = githubLink;
+    }
+
+    public Team(String teamID, String cohortID, String teamName, String projectName, String projectDesc, String githubLink) {
+        this.teamID = UUID.fromString(teamID);
+        this.cohortID = UUID.fromString(cohortID);
+        this.teamName = teamName;
+        this.projectName = projectName;
+        this.projectDesc = projectDesc;
+        this.githubLink = githubLink;
+    }
 
     // Setters -- somehow this information is going to need to get sent into the database
     public void setTeamID(UUID teamID) { this.teamID = teamID; }
