@@ -32,7 +32,7 @@ public class Team {
         this.githubLink = githubLink;
     }
 
-    // Setters -- somehow this information is going to need to get sent into the database
+    // Setters
     public void setTeamID(UUID teamID) { this.teamID = teamID; }
     public void setCohortID(UUID cohortID) { this.cohortID = cohortID; }
     public void setTeamName(String teamName) { this.teamName = teamName; }
@@ -40,7 +40,7 @@ public class Team {
     public void setProjectDesc(String projectDesc) { this.projectDesc = projectDesc; }
     public void setGithubLink(String githubLink) { this.githubLink = githubLink; }
 
-    // Getters -- somehow this information is going to need to get pulled from the database
+    // Getters
     public UUID getTeamID() { return teamID; }
     public UUID getCohortID() { return cohortID; }
     public String getTeamName() { return teamName; }

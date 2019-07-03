@@ -50,7 +50,6 @@ public class TeamServlet {
         String githubLink = request.getParameter("githubLink");
 
         // Create a new Team with the acquired data.
-        // NOTE: MUST CONVERT STRING TO UUID SOMEHOW!!!!
         Team team = teamDatastore.create(new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink));
 
         // ID is now set, return it.
@@ -69,7 +68,6 @@ public class TeamServlet {
         String githubLink = request.getParameter("githubLink");
 
         // Edit an existing team with the acquired data.
-        // NOTE: MUST CONVERT STRING TO UUID SOMEHOW!!!!
         Team team = teamDatastore.edit(new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink));
 
         // Team is set, now return it.
