@@ -72,7 +72,8 @@ public class AboutMeServlet extends HttpServlet {
     String firstName = request.getParameter("firstName");
     String lastName = request.getParameter("lastName");
     String imgUrl = request.getParameter("imgUrl");
-    User user = new User(id, userEmail, aboutMe, firstName, lastName, imgUrl);
+    String teamId = request.getParameter("teamId");
+    User user = new User(id, userEmail, teamId, aboutMe, firstName, lastName, imgUrl);
     datastore.storeUser(user);
     //return JSON
     response.sendRedirect("/user-page.html?user=" + userEmail);
