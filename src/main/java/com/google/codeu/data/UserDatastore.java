@@ -19,6 +19,8 @@ package com.google.codeu.data;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -35,42 +37,54 @@ public class UserDatastore {
   private DatastoreService userdatastore;
 
   public UserDatastore() {
-    datastore = DatastoreServiceFactory.getDatastoreService();
+    userdatastore = DatastoreServiceFactory.getDatastoreService();
   }
   
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
    Entity userEntity = new Entity("User", user.getEmail());
-   userEntity.setProperty("email", user.getEmail());
+   userEntity.setProperty("id", user.getId());
    userEntity.setProperty("aboutMe", user.getAboutMe());
    userEntity.setProperty("firstName", user.getFirstName());
    userEntity.setProperty("lastName", user.getLastName());
    userEntity.setProperty("imgUrl", user.getImg());
-   userEntity.setProperty("password", user.getPassword());
    userdatastore.put(userEntity);
   }
   
+  public User edit(User user) {
+	  User old = getUser(user.getId().toString());
+	  if (old == null) {
+	      // Throw some error on front end.
+	      return null;
+	  }
+	  // Copy over any of the new fields that users can edit.
+	  old.setAboutMe(user.getAboutMe());
+	  old.setFirstName(user.getFirstName());
+	  old.setLastName(user.getLastName());
+	  old.setImg(user.getImg());
+	  storeUser(old);
+	  return old;
+  }
+
   /**
    * Returns the User owned by the email address, or
    * null if no matching User was found.
    */
-  public User getUser(String email) {
-  
+  public User getUser(String id) {
    Query query = new Query("User")
-     .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-   PreparedQuery results = userdatastore.prepare(query);
-   Entity userEntity = results.asSingleEntity();
-   if(userEntity == null) {
-    return null;
-   }
-   
+		     .setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+		   PreparedQuery results = userdatastore.prepare(query);
+		   Entity userEntity = results.asSingleEntity();
+		   if(userEntity == null) {
+		    return null;
+		   }
+   String email = userEntity.getKey().getName();
    String aboutMe = (String) userEntity.getProperty("aboutMe");
    String imgUrl = (String) userEntity.getProperty("imgUrl");
-   String password = (String) userEntity.getProperty("password");
    String firstName = (String) userEntity.getProperty("firstName");
    String lastName = (String) userEntity.getProperty("lastName");
    
-   User user = new User(email, aboutMe, password, firstName, lastName, imgUrl);
+   User user = new User(UUID.fromString(id), email, aboutMe, firstName, lastName, imgUrl);
    
    return user;
   }
