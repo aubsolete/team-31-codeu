@@ -48,6 +48,7 @@ public class UserDatastore {
    userEntity.setProperty("firstName", user.getFirstName());
    userEntity.setProperty("lastName", user.getLastName());
    userEntity.setProperty("imgUrl", user.getImg());
+   userEntity.setProperty("teamId", user.getTeamId());
    userdatastore.put(userEntity);
   }
   
@@ -83,8 +84,9 @@ public class UserDatastore {
    String imgUrl = (String) userEntity.getProperty("imgUrl");
    String firstName = (String) userEntity.getProperty("firstName");
    String lastName = (String) userEntity.getProperty("lastName");
+   String teamId = (String) userEntity.getProperty("teamId");
    
-   User user = new User(UUID.fromString(id), email, aboutMe, firstName, lastName, imgUrl);
+   User user = new User(UUID.fromString(id), email, teamId, aboutMe, firstName, lastName, imgUrl);
    
    return user;
   }

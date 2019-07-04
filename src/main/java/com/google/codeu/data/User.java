@@ -8,26 +8,26 @@ public class User {
   private UUID id;
   private String email;
   private String aboutMe;
-  private String password;
   private String firstName;
   private String lastName;
   private String imgUrl;
+  private UUID teamId;
   
-  public User(String email) {
-	    this(UUID.randomUUID(), email, null, null, null, null);
+  public User(String email, String teamId) {
+	    this(UUID.randomUUID(), email, teamId, null, null, null, null);
 	  }
   
-  public User(UUID id, String email, String aboutMe, String firstName, String lastName, String imgUrl) {
+  public User(UUID id, String email, String teamId, String aboutMe, String firstName, String lastName, String imgUrl) {
 	this.id = id;
     this.email = email;
     this.aboutMe = aboutMe;
-    this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.imgUrl = imgUrl;
+    this.teamId = UUID.fromString(teamId);
   }
 
-  public User(String email2, String aboutMe2) {
+  public User(String email2, String teamId, String aboutMe2) {
 	this.email = email2;
 	this.aboutMe = aboutMe2;
 }
@@ -54,7 +54,11 @@ public UUID getId(){
   
   public String getImg() {
 	    return imgUrl;
-}
+  }
+  
+  public UUID getTeamId() {
+	    return teamId;
+ }
   
   public void setAboutMe(String aboutMe) {
 	  this.aboutMe = aboutMe;
@@ -71,4 +75,8 @@ public UUID getId(){
   public void setImg(String imgUrl) {
 	  this.imgUrl = imgUrl;
   }
+  
+  public void setTeamId(UUID teamId) {
+	   this.teamId = teamId;
+ }
 }
