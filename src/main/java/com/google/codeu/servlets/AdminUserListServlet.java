@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import java.util.Set;
+import java.util.UUID;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +41,9 @@ public class AdminUserListServlet extends HttpServlet {
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
         return;
     }
+    Set<String> teamMembers = userDatastore.getUsersForTeam(UUID.fromString(teamID));
     Gson gson = new Gson();
-    String json = gson.toJson(request.getParameter("emails").split(","));
+    String json = gson.toJson(teamMembers);
     response.getOutputStream().println(json);
   }
 }

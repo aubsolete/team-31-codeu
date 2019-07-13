@@ -20,6 +20,7 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -99,5 +100,19 @@ public class UserDatastore {
 	    users.add((String) entity.getProperty("email"));
 	  }
 	  return users;
+  }
+  
+  public Set<String> getUsersForTeam(UUID teamId) {
+	  Set<String> emails = new HashSet<String>();
+	  Query query = new Query("User")
+	  .setFilter(new Query.FilterPredicate("teamId", FilterOperator.EQUAL, teamId));
+	  PreparedQuery results = userdatastore.prepare(query);
+	   List<Entity> userEntities = results.asList(FetchOptions.Builder.withLimit(4));
+	   if (userEntities == null) {
+	    return null;
+	   }
+	   for (Entity userEntity : userEntities) 
+		   emails.add(userEntity.getKey().getName());
+	   return emails;
   }
 }
