@@ -9,6 +9,7 @@ class Feed extends React.Component {
 
         // This is a stateful component so we need to define a default representation of our state
         this.state = {
+            text: '',
             messages: null
         };
     }
@@ -17,14 +18,14 @@ class Feed extends React.Component {
         if (this.state.messages == null) {
             return (<div> loading messages</div>);
         }
-
-        if (this.state.messages.length === 0) {
-            return (<p> There are no posts yet </p>);
-        }
-
         return (
             <div>
+                <div>
+                    <textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
+                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> submit </button>
+                </div>
                 <div className="message-container">
+                    {this.state.messages.length === 0 && (<p> There are no posts yet </p>)}
                     {this.state.messages.map((message) =>
                         <div key={message.id} className="message-div">
                             <div className="message-header">
@@ -48,8 +49,24 @@ class Feed extends React.Component {
     // Additional documentation about React's lifecycle can be found here:
     // https://reactjs.org/docs/react-component.html#commonly-used-lifecycle-methods
     componentDidMount() {
-        // Make a call to our API
-        fetch('/feed')
+       this.getMessages();
+    }
+
+    onTextChange(event) {
+        event.preventDefault();
+        this.setState({text: event.target.value});
+    }
+
+    onButtonClick(event) {
+        event.preventDefault();
+        fetch(`/messages?text=${this.state.text}`, {method: 'POST'})
+            .then((response) => this.getMessages())
+            .catch(() => alert('Unable to upload the message. An error occured.'));
+    }
+
+    getMessages() {
+         // Make a call to our API
+        return fetch('/feed')
             // Coax the response to json
             .then((response) => response.json())
             // Set our state using the returned messages. React will now rerender the component.
