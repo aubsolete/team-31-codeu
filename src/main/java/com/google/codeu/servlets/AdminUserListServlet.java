@@ -1,6 +1,5 @@
 package com.google.codeu.servlets;
 
-import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Team;
 import com.google.codeu.data.TeamDatastore;
 import com.google.codeu.data.UserDatastore;

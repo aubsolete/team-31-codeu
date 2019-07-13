@@ -1,5 +1,8 @@
 package com.google.codeu.data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.google.appengine.api.datastore.*;
 
 public class TeamDatastore {
@@ -61,4 +64,14 @@ public class TeamDatastore {
         String githubLink = (String) teamEntity.getProperty("githubLink");
         return new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink);
     }
+    
+    public Set<String> getTeams(){
+  	  Set<String> teams = new HashSet<>();
+  	  Query query = new Query("Team");
+  	  PreparedQuery results = teamDatastore.prepare(query);
+  	  for(Entity entity : results.asIterable()) {
+  	    teams.add((String) entity.getProperty("teamName"));
+  	  }
+  	  return teams;
+  	}
 }

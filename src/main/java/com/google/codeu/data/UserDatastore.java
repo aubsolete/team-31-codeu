@@ -99,5 +99,5 @@ public class UserDatastore {
 	    users.add((String) entity.getProperty("email"));
 	  }
 	  return users;
-	}
+  }
 }

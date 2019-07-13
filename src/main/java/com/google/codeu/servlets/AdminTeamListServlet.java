@@ -1,6 +1,6 @@
 package com.google.codeu.servlets;
 
-import com.google.codeu.data.UserDatastore;
+import com.google.codeu.data.TeamDatastore;
 import com.google.gson.Gson;
 import java.io.IOException;
 
@@ -13,23 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Handles fetching all users for the community page.
  */
-@WebServlet("/user-list")
-public class UserListServlet extends HttpServlet {
+@WebServlet("/admin-team-list")
+public class AdminTeamListServlet extends HttpServlet {
 
-  private UserDatastore datastore;
+  private TeamDatastore datastore;
 
   @Override
   public void init() {
-    datastore = new UserDatastore();
+    datastore = new TeamDatastore();
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType("application/json");
-    Set<String> users = datastore.getUsers();
+    Set<String> teams = datastore.getTeams();
     Gson gson = new Gson();
-    String json = gson.toJson(users);
+    String json = gson.toJson(teams);
     response.getOutputStream().println(json);
   }
 }
