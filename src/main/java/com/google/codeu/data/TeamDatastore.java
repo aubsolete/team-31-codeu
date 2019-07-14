@@ -1,10 +1,6 @@
 package com.google.codeu.data;
 
 import com.google.appengine.api.datastore.*;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import java.util.UUID;
-import com.google.codeu.data.Team;
 
 public class TeamDatastore {
 

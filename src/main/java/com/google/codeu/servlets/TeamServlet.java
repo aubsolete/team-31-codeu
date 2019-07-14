@@ -1,9 +1,13 @@
 package com.google.codeu.servlets;
 
 import com.google.api.Http;
+
 import java.util.UUID;
 import com.google.codeu.data.Team;
 import com.google.codeu.data.TeamDatastore;
+import com.google.codeu.data.User;
+import com.google.codeu.data.UserDatastore;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,9 +16,11 @@ import com.google.gson.Gson;
 public class TeamServlet {
 
     private TeamDatastore teamDatastore;
+    private UserDatastore userDatastore;
 
     public void init() {
         teamDatastore = new TeamDatastore();
+        userDatastore = new UserDatastore();
     }
 
     // Note by Faisal: return a specific Team or list of Teams depending on the parameters in the request.
@@ -42,17 +48,19 @@ public class TeamServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a team.
-        String teamID = request.getParameter("teamID");
         String cohortID = request.getParameter("cohortID");
         String teamName = request.getParameter("teamName");
         String projectName = request.getParameter("projectName");
         String projectDesc = request.getParameter("projectDesc");
         String githubLink = request.getParameter("githubLink");
+        String[] emailList = request.getParameter("emails").split(",");
 
         // Create a new Team with the acquired data.
-        // NOTE: MUST CONVERT STRING TO UUID SOMEHOW!!!!
-        Team team = teamDatastore.create(new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink));
-
+        Team team = teamDatastore.create(new Team(cohortID, teamName, projectName, projectDesc, githubLink));
+        for (String email : emailList) {
+        	User user = new User(email, team.getTeamID().toString());
+        	userDatastore.storeUser(user);
+        }
         // ID is now set, return it.
         response.getWriter().println(new Gson().toJson(team));
     }
@@ -69,7 +77,6 @@ public class TeamServlet {
         String githubLink = request.getParameter("githubLink");
 
         // Edit an existing team with the acquired data.
-        // NOTE: MUST CONVERT STRING TO UUID SOMEHOW!!!!
         Team team = teamDatastore.edit(new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink));
 
         // Team is set, now return it.
