@@ -2,11 +2,14 @@ package com.google.codeu.servlets;
 
 import com.google.codeu.data.Cohort;
 import com.google.codeu.data.CohortDatastore;
+
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.google.gson.Gson;
 
+@WebServlet("/cohort")
 public class CohortServlet {
 
     private CohortDatastore cohortDatastore;
