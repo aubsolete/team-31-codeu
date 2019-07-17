@@ -88,19 +88,23 @@ public class MessageServlet extends HttpServlet {
 
     String user = userService.getCurrentUser().getEmail();
     
- // Get the message entered by the user.
+  // Get the message entered by the user.
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
-    
     String regex = "(https?://\\S+\\.(png|jpg))";
-    String replacement = "<img src=\"$1\" />";
-    String textWithImagesReplaced = text.replaceAll(regex, replacement);
 
-    // Get the URL of the image that the user uploaded to Blobstore.
-    String imageUrl = getUploadedFileUrl(request, "image");
-    if (imageUrl!=null) {
-    	textWithImagesReplaced += (" <img src="+imageUrl+" />");
+    if (text.matches(regex)) {
+      String replacement = "<img src=\"$1\" />";
+      text = text.replaceAll(regex, replacement);
+
+      // Get the URL of the image that the user uploaded to Blobstore.
+      String imageUrl = getUploadedFileUrl(request, "image");
+      if (imageUrl != null) {
+        text += (" <img src="+imageUrl+" />");
+      }
     }
-    Message message = new Message(user, textWithImagesReplaced);
+
+
+    Message message = new Message(user, text);
     datastore.storeMessage(message);
     
     response.sendRedirect("/user-page.html?user=" + user);
