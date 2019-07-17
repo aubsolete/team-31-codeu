@@ -102,7 +102,7 @@ public class UserDatastore {
 	  return users;
   }
   
-  public Set<String> getUsersForTeam(UUID teamId) {
+  public List<User> getUsersForTeam(String teamId) {
 	  Set<String> emails = new HashSet<String>();
 	  Query query = new Query("User")
 	  .setFilter(new Query.FilterPredicate("teamId", FilterOperator.EQUAL, teamId));
