@@ -65,7 +65,7 @@ public class TeamDatastore {
         return new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink);
     }
     
-    public Set<String> getTeams(){
+    public List<Team> getTeams(String cohortId) {
   	  Set<String> teams = new HashSet<>();
   	  Query query = new Query("Team");
   	  PreparedQuery results = teamDatastore.prepare(query);
