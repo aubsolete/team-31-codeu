@@ -1,9 +1,10 @@
 package com.google.codeu.data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.UUID;
 
 import com.google.appengine.api.datastore.*;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 public class TeamDatastore {
 
@@ -66,11 +67,12 @@ public class TeamDatastore {
     }
     
     public List<Team> getTeams(String cohortId) {
-  	  Set<String> teams = new HashSet<>();
-  	  Query query = new Query("Team");
+  	  List<Team> teams = new ArrayList<Team>();
+  	  Query query = new Query("Team")
+  		  .setFilter(new Query.FilterPredicate("cohortId", FilterOperator.EQUAL, UUID.fromString(cohortId)));
   	  PreparedQuery results = teamDatastore.prepare(query);
   	  for(Entity entity : results.asIterable()) {
-  	    teams.add((String) entity.getProperty("teamName"));
+  	    teams.add(getTeam(entity));
   	  }
   	  return teams;
   	}

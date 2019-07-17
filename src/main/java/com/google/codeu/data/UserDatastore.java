@@ -103,7 +103,7 @@ public class UserDatastore {
   }
   
   public List<User> getUsersForTeam(String teamId) {
-	  Set<String> emails = new HashSet<String>();
+	  List<User> users = new ArrayList<User>();
 	  Query query = new Query("User")
 	  .setFilter(new Query.FilterPredicate("teamId", FilterOperator.EQUAL, teamId));
 	  PreparedQuery results = userdatastore.prepare(query);
@@ -112,7 +112,7 @@ public class UserDatastore {
 	    return null;
 	   }
 	   for (Entity userEntity : userEntities) 
-		   emails.add(userEntity.getKey().getName());
-	   return emails;
+		   users.add(getUser((String) userEntity.getProperty("id")));
+	   return users;
   }
 }

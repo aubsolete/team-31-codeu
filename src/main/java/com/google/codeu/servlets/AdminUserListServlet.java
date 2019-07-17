@@ -2,10 +2,11 @@ package com.google.codeu.servlets;
 
 import com.google.codeu.data.Team;
 import com.google.codeu.data.TeamDatastore;
+import com.google.codeu.data.User;
 import com.google.codeu.data.UserDatastore;
 import com.google.gson.Gson;
 import java.io.IOException;
-
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class AdminUserListServlet extends HttpServlet {
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
         return;
     }
-    Set<String> teamMembers = userDatastore.getUsersForTeam(UUID.fromString(teamID));
+    List<User> teamMembers = userDatastore.getUsersForTeam(teamID);
     Gson gson = new Gson();
     String json = gson.toJson(teamMembers);
     response.getOutputStream().println(json);

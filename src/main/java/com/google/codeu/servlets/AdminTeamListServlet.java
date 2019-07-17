@@ -1,10 +1,11 @@
 package com.google.codeu.servlets;
 
+import com.google.codeu.data.Team;
 import com.google.codeu.data.TeamDatastore;
 import com.google.gson.Gson;
 import java.io.IOException;
 
-import java.util.Set;
+import java.util.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,8 @@ public class AdminTeamListServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType("application/json");
-    Set<String> teams = datastore.getTeams();
+    String cohortId = request.getParameter("cohortId");
+    List<Team> teams = datastore.getTeams(cohortId);
     Gson gson = new Gson();
     String json = gson.toJson(teams);
     response.getOutputStream().println(json);
