@@ -30,7 +30,7 @@ class AdminTeamListView extends React.Component {
                         <div key={team.teamId} className="team-div">
                             <div className="team-body">
                                 <li>
-                                    <Link to="/team/${team.cohortId}/${team.teamId}"> {team.teamName} </Link>
+                                    <Link to=`/team/${team.cohortId}/${team.teamId}`> {team.teamName} </Link>
                                 </li>
                             </div>
                         </div>
