@@ -60,7 +60,7 @@ public class CohortDatastore {
         Query query = new Query("Cohort");
         PreparedQuery results = cohortDatastore.prepare(query);
         for(Entity entity : results.asIterable()) {
-            cohorts.add((Cohort) entity.getProperty("cohortName"));
+            cohorts.add(getCohort(entity));
         }
         return cohorts;
     }
