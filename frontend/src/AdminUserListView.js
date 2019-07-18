@@ -63,7 +63,7 @@ class AdminUserListView extends React.Component {
 
     getMembers() {
          // Make a call to our API
-        return fetch('/admin-user-list?teamId=${this.props.match.params.teamId}')
+        return fetch(`/admin-user-list?teamId=${this.props.match.params.teamId}`)
             // Coax the response to json
             .then((response) => response.json())
             // Set our state using the returned members. React will now rerender the component.
