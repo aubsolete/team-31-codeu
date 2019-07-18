@@ -32,7 +32,7 @@ public class AdminUserListServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    String teamID = request.getParameter("teamID"); // Fetch the team's id.
+    String teamID = request.getParameter("teamId"); // Fetch the team's id.
     if (teamID == null || teamID.equals("")) {     // Request is empty...
         response.getWriter().println("[]");        // ...return empty array.
         return;

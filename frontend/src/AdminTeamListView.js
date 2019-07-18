@@ -28,7 +28,11 @@ class AdminTeamListView extends React.Component {
                     {this.state.teams.length === 0 && (<p> There are no teams yet </p>)}
                     {this.state.teams.map((team) =>
                         <div key={team.teamId} className="team-div">
-                            <div className="team-body">{team.teamName}</div>
+                            <div className="team-body">
+                                <li>
+                                    <Link to="/team/${team.cohortId}/${team.teamId}"> {team.teamName} </Link>
+                                </li>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -56,14 +60,14 @@ class AdminTeamListView extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/team?text=${this.state.text}`, {method: 'POST'})
+        fetch(`/team?cohortId=${this.props.match.params.cohortId}&teamName=${this.state.text}&projectName=""&projectDesc=""&githubLink=""&emails=[]`, {method: 'POST'})
             .then((response) => this.getTeams()) 
             .catch(() => alert('Unable to upload the team. An error occured.'));
     }
 
     getTeams() {
          // Make a call to our API
-        return fetch('/admin-team-list')
+        return fetch('/admin-team-list?cohortId=${this.props.match.params.cohortId}')
             // Coax the response to json
             .then((response) => response.json())
             // Set our state using the returned teams. React will now rerender the component.

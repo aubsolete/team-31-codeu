@@ -56,14 +56,14 @@ class AdminUserListView extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/about?text=${this.state.text}`, {method: 'POST'}) //WE DON'T HAVE A POST METHOD NOW AND I DON'T KNOW HOW I SHOULD HANDLE THIS
+        fetch(`/create-user?cohortId=${this.props.match.params.cohortId}&teamId=${this.state.props.match.params.teamId}&email=${this.state.text}`, {method: 'POST'}) 
             .then((response) => this.getMembers()) 
             .catch(() => alert('Unable to upload the member. An error occured.'));
     }
 
     getMembers() {
          // Make a call to our API
-        return fetch('/admin-user-list')
+        return fetch('/admin-user-list?teamId=${this.props.match.params.teamId}')
             // Coax the response to json
             .then((response) => response.json())
             // Set our state using the returned members. React will now rerender the component.
