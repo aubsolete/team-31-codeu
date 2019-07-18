@@ -67,7 +67,7 @@ class AdminTeamListView extends React.Component {
 
     getTeams() {
          // Make a call to our API
-        return fetch('/admin-team-list?cohortId=${this.props.match.params.cohortId}')
+        return fetch(`/admin-team-list?cohortId=${this.props.match.params.cohortId}`)
             // Coax the response to json
             .then((response) => response.json())
             // Set our state using the returned teams. React will now rerender the component.
