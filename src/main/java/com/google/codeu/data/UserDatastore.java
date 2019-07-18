@@ -92,6 +92,17 @@ public class UserDatastore {
    return user;
   }
   
+  public User getUserFromEntity(Entity userEntity) {
+	   String id = (String) userEntity.getProperty("id");
+	   String email = userEntity.getKey().getName();
+	   String aboutMe = (String) userEntity.getProperty("aboutMe");
+	   String imgUrl = (String) userEntity.getProperty("imgUrl");
+	   String firstName = (String) userEntity.getProperty("firstName");
+	   String lastName = (String) userEntity.getProperty("lastName");
+	   String teamId = (String) userEntity.getProperty("teamId");
+	   return new User(UUID.fromString(id), email, teamId, aboutMe, firstName, lastName, imgUrl);
+	}
+  
   public Set<String> getUsers(){
 	  Set<String> users = new HashSet<>();
 	  Query query = new Query("User");
@@ -112,7 +123,7 @@ public class UserDatastore {
 	    return null;
 	   }
 	   for (Entity userEntity : userEntities) 
-		   users.add(getUser((String) userEntity.getProperty("id")));
+		   users.add(getUserFromEntity(userEntity));
 	   return users;
   }
 }
