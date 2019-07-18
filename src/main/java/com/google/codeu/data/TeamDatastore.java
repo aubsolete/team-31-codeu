@@ -69,7 +69,7 @@ public class TeamDatastore {
     public List<Team> getTeams(String cohortId) {
   	  List<Team> teams = new ArrayList<Team>();
   	  Query query = new Query("Team")
-  		  .setFilter(new Query.FilterPredicate("cohortId", FilterOperator.EQUAL, UUID.fromString(cohortId)));
+  		  .setFilter(new Query.FilterPredicate("cohortId", FilterOperator.EQUAL, cohortId));
   	  PreparedQuery results = teamDatastore.prepare(query);
   	  for(Entity entity : results.asIterable()) {
   	    teams.add(getTeam(entity));
