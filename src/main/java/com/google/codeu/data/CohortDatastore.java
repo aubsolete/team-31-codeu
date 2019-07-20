@@ -2,6 +2,10 @@ package com.google.codeu.data;
 
 import com.google.appengine.api.datastore.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashSet;
+
 public class CohortDatastore {
 
     private DatastoreService cohortDatastore;
@@ -51,4 +55,14 @@ public class CohortDatastore {
         return new Cohort(cohortID, cohortName);
     }
 
+    public List<Cohort> getCohorts() {
+        List<Cohort> cohorts = new ArrayList<>();
+        Query query = new Query("Cohort");
+        PreparedQuery results = cohortDatastore.prepare(query);
+        for(Entity entity : results.asIterable()) {
+            cohorts.add(getCohort(entity));
+        }
+        return cohorts;
+    }
+  
 }
