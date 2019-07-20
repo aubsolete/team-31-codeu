@@ -9,7 +9,6 @@ class AdminCohortListView extends React.Component {
     }
 
     render() {
-        // Is it possible for no cohorts to be returned?
         return (
             <div>
                 <h2> Cohorts </h2>
@@ -17,9 +16,7 @@ class AdminCohortListView extends React.Component {
                 <button> Submit </button>
                 <div>
                     {this.state.cohorts.length == 0 && (<p> Sorry, we could not find a cohort with that name. </p>)}
-                    {this.state.cohorts.length > 0 /* would we do some sort of for-each here? */
-                        && ( <ol> {cohortName} </ol> )
-                    }
+                    {this.state.cohorts.map((cohort) => <p> cohort.cohortName </p>) }
                 </div>
             </div>
         )
@@ -34,9 +31,7 @@ class AdminCohortListView extends React.Component {
     }
 
     getCohorts() {
-        const url = `/cohort?cohortId=${this.props.match.params.cohortId}`;
-        // Or would we want to get by name, due to the user search?
-        // const url = `/cohort?cohortName=${this.props.match.params.cohortName}`;
+        const url = `/cohort-list`;
         return
             fetch(url)
             .then((response) => response.json())
@@ -44,7 +39,7 @@ class AdminCohortListView extends React.Component {
     }
 
     createNewCohort() {
-        const url = `/cohort?cohortId=${this.props.match.params.cohortId}`;
+        const url = `/cohort?cohortName=${this.props.match.params.cohortName}`;
         fetch(url)
                 .then((response) => response.json())
                 .then((cohorts) => this.setState({cohorts: cohorts});
