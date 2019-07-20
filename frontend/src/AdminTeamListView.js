@@ -3,20 +3,20 @@ import React from 'react';
 /**
  * A component that displays a list of all the messages in our application.
  */
-class Feed extends React.Component {
+class AdminTeamListView extends React.Component {
     constructor(props) {
         super(props);
 
         // This is a stateful component so we need to define a default representation of our state
         this.state = {
             text: '',
-            messages: null
+            teams: null
         };
     }
 
     render() {
-        if (this.state.messages == null) {
-            return (<div> loading messages</div>);
+        if (this.state.teams == null) {
+            return (<div> loading teams</div>);
         }
         return (
             <div>
@@ -24,14 +24,15 @@ class Feed extends React.Component {
                     <textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
                     <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> submit </button>
                 </div>
-                <div className="message-container">
-                    {this.state.messages.length === 0 && (<p> There are no posts yet </p>)}
-                    {this.state.messages.map((message) =>
-                        <div key={message.id} className="message-div">
-                            <div className="message-header">
-                                {message.user} - {new Date(message.timestamp).toDateString()}
+                <div className="team-container">
+                    {this.state.teams.length === 0 && (<p> There are no teams yet </p>)}
+                    {this.state.teams.map((team) =>
+                        <div key={team.teamId} className="team-div">
+                            <div className="team-body">
+                                <li>
+                                    <Link to=`/team/${team.cohortId}/${team.teamId}`> {team.teamName} </Link>
+                                </li>
                             </div>
-                            <div className="message-body">{message.text}</div>
                         </div>
                     )}
                 </div>
@@ -49,7 +50,7 @@ class Feed extends React.Component {
     // Additional documentation about React's lifecycle can be found here:
     // https://reactjs.org/docs/react-component.html#commonly-used-lifecycle-methods
     componentDidMount() {
-       this.getMessages();
+       this.getTeams();
     }
 
     onTextChange(event) {
@@ -59,19 +60,19 @@ class Feed extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/messages?text=${this.state.text}`, {method: 'POST'})
-            .then((response) => this.getMessages())
-            .catch(() => alert('Unable to upload the message. An error occured.'));
+        fetch(`/team?cohortId=${this.props.match.params.cohortId}&teamName=${this.state.text}&projectName=""&projectDesc=""&githubLink=""&emails=[]`, {method: 'POST'})
+            .then((response) => this.getTeams()) 
+            .catch(() => alert('Unable to upload the team. An error occured.'));
     }
 
-    getMessages() {
+    getTeams() {
          // Make a call to our API
-        return fetch('/feed')
+        return fetch(`/admin-team-list?cohortId=${this.props.match.params.cohortId}`)
             // Coax the response to json
             .then((response) => response.json())
-            // Set our state using the returned messages. React will now rerender the component.
-            .then((messages) => this.setState({messages}));
+            // Set our state using the returned teams. React will now rerender the component.
+            .then((teams) => this.setState({teams}));
     }
 }
 
-export default Feed;
+export default AdminTeamListView;

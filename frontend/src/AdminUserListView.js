@@ -3,20 +3,20 @@ import React from 'react';
 /**
  * A component that displays a list of all the messages in our application.
  */
-class Feed extends React.Component {
+class AdminUserListView extends React.Component {
     constructor(props) {
         super(props);
 
         // This is a stateful component so we need to define a default representation of our state
         this.state = {
             text: '',
-            messages: null
+            members: null
         };
     }
 
     render() {
-        if (this.state.messages == null) {
-            return (<div> loading messages</div>);
+        if (this.state.members == null) {
+            return (<div> loading members</div>);
         }
         return (
             <div>
@@ -24,14 +24,11 @@ class Feed extends React.Component {
                     <textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
                     <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> submit </button>
                 </div>
-                <div className="message-container">
-                    {this.state.messages.length === 0 && (<p> There are no posts yet </p>)}
-                    {this.state.messages.map((message) =>
-                        <div key={message.id} className="message-div">
-                            <div className="message-header">
-                                {message.user} - {new Date(message.timestamp).toDateString()}
-                            </div>
-                            <div className="message-body">{message.text}</div>
+                <div className="member-container">
+                    {this.state.members.length === 0 && (<p> There are no members yet </p>)}
+                    {this.state.members.map((member) =>
+                        <div key={member.id} className="member-div">
+                            <div className="member-body">{member.email}</div>
                         </div>
                     )}
                 </div>
@@ -49,7 +46,7 @@ class Feed extends React.Component {
     // Additional documentation about React's lifecycle can be found here:
     // https://reactjs.org/docs/react-component.html#commonly-used-lifecycle-methods
     componentDidMount() {
-       this.getMessages();
+       this.getMembers();
     }
 
     onTextChange(event) {
@@ -59,19 +56,19 @@ class Feed extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/messages?text=${this.state.text}`, {method: 'POST'})
-            .then((response) => this.getMessages())
-            .catch(() => alert('Unable to upload the message. An error occured.'));
+        fetch(`/create-user?cohortId=${this.props.match.params.cohortId}&teamId=${this.state.props.match.params.teamId}&email=${this.state.text}`, {method: 'POST'}) 
+            .then((response) => this.getMembers()) 
+            .catch(() => alert('Unable to upload the member. An error occured.'));
     }
 
-    getMessages() {
+    getMembers() {
          // Make a call to our API
-        return fetch('/feed')
+        return fetch(`/admin-user-list?teamId=${this.props.match.params.teamId}`)
             // Coax the response to json
             .then((response) => response.json())
-            // Set our state using the returned messages. React will now rerender the component.
-            .then((messages) => this.setState({messages}));
+            // Set our state using the returned members. React will now rerender the component.
+            .then((members) => this.setState({members}));
     }
 }
 
-export default Feed;
+export default AdminUserListView;
