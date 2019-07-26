@@ -4,13 +4,14 @@ import com.google.codeu.data.Cohort;
 import com.google.codeu.data.CohortDatastore;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.google.gson.Gson;
 
-@WebServlet("/cohort")
-public class CohortServlet {
+@WebServlet( "/cohort")
+public class CohortServlet extends HttpServlet {
 
     private CohortDatastore cohortDatastore;
 
@@ -19,6 +20,7 @@ public class CohortServlet {
     }
 
     // Note by Faisal: return a specific Cohort or list of Cohorts depending on the parameters in the request.
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String cohortID = request.getParameter("cohortID"); // Fetch the cohort's id.
@@ -40,6 +42,7 @@ public class CohortServlet {
     }
 
     // Note by Faisal: create a new Cohort.
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a cohort.
@@ -53,6 +56,7 @@ public class CohortServlet {
     }
 
     // Note by Faisal: edit an existing Cohort. The id of the Cohort to edit will be a request parameter.
+    @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a cohort.

@@ -1,8 +1,5 @@
 package com.google.codeu.servlets;
 
-import com.google.api.Http;
-
-import java.util.UUID;
 import com.google.codeu.data.Team;
 import com.google.codeu.data.TeamDatastore;
 import com.google.codeu.data.User;
@@ -60,7 +57,7 @@ public class TeamServlet {
         // Create a new Team with the acquired data.
         Team team = teamDatastore.create(new Team(cohortID, teamName, projectName, projectDesc, githubLink));
         for (String email : emailList) {
-        	User user = new User(email, team.getTeamID().toString());
+        	User user = new User(email, team.getTeamId().toString());
         	userDatastore.storeUser(user);
         }
         // ID is now set, return it.
