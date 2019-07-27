@@ -56,7 +56,7 @@ class AdminUserListView extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/create-user?cohortId=${this.props.match.params.cohortId}&teamId=${this.state.props.match.params.teamId}&email=${this.state.text}`, {method: 'POST'}) 
+        fetch(`/create-user?teamId=${this.props.match.params.teamId}&email=${this.state.text}`, {method: 'POST'})
             .then((response) => this.getMembers()) 
             .catch(() => alert('Unable to upload the member. An error occured.'));
     }
