@@ -6,13 +6,14 @@ import com.google.codeu.data.User;
 import com.google.codeu.data.UserDatastore;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.google.gson.Gson;
 
 @WebServlet("/team")
-public class TeamServlet {
+public class TeamServlet extends HttpServlet {
 
     private TeamDatastore teamDatastore;
     private UserDatastore userDatastore;
