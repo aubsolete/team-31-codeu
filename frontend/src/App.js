@@ -5,6 +5,7 @@ import Feed from './Feed';
 import AdminTeamListView from './AdminTeamListView';
 import AdminUserListView from './AdminUserListView';
 import AdminCohortListView from './AdminCohortListView';
+import ImageUploadTest from "./ImageUploadTest";
 
 /**
  * The core building block of React is a component. A component can be declared two different ways.
@@ -99,6 +100,7 @@ class App extends React.Component {
                 <Route path="/cohort" exact component={AdminCohortListView} />
                 <Route path="/team/:teamId" exact component={AdminUserListView} />
                 <Route path="/cohort/:cohortId" exact component={AdminTeamListView} />
+                <Route path="/image-upload" component={ImageUploadTest}/>
             </div>
         </Router>
     );
