@@ -1,20 +1,19 @@
 package com.google.codeu.servlets;
 
-import com.google.api.Http;
-
-import java.util.UUID;
 import com.google.codeu.data.Team;
 import com.google.codeu.data.TeamDatastore;
 import com.google.codeu.data.User;
 import com.google.codeu.data.UserDatastore;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.google.gson.Gson;
+
 @WebServlet("/team")
-public class TeamServlet {
+public class TeamServlet extends HttpServlet {
 
     private TeamDatastore teamDatastore;
     private UserDatastore userDatastore;
@@ -59,7 +58,7 @@ public class TeamServlet {
         // Create a new Team with the acquired data.
         Team team = teamDatastore.create(new Team(cohortID, teamName, projectName, projectDesc, githubLink));
         for (String email : emailList) {
-        	User user = new User(email, team.getTeamID().toString());
+        	User user = new User(email, team.getTeamId().toString());
         	userDatastore.storeUser(user);
         }
         // ID is now set, return it.

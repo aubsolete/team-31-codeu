@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 /**
  * A component that displays a list of all the messages in our application.
@@ -30,7 +31,7 @@ class AdminTeamListView extends React.Component {
                         <div key={team.teamId} className="team-div">
                             <div className="team-body">
                                 <li>
-                                    <Link to=`/team/${team.cohortId}/${team.teamId}`> {team.teamName} </Link>
+                                    <Link to={`/team/${team.teamId}`}> {team.teamName} </Link>
                                 </li>
                             </div>
                         </div>
@@ -60,7 +61,7 @@ class AdminTeamListView extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/team?cohortId=${this.props.match.params.cohortId}&teamName=${this.state.text}&projectName=""&projectDesc=""&githubLink=""&emails=[]`, {method: 'POST'})
+        fetch(`/admin-team-list?cohortId=${this.props.match.params.cohortId}&teamName=${this.state.text}`, {method: 'POST'})
             .then((response) => this.getTeams()) 
             .catch(() => alert('Unable to upload the team. An error occured.'));
     }

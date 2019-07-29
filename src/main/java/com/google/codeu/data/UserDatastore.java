@@ -44,12 +44,12 @@ public class UserDatastore {
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
    Entity userEntity = new Entity("User", user.getEmail());
-   userEntity.setProperty("id", user.getId());
+   userEntity.setProperty("id", user.getId().toString());
    userEntity.setProperty("aboutMe", user.getAboutMe());
    userEntity.setProperty("firstName", user.getFirstName());
    userEntity.setProperty("lastName", user.getLastName());
    userEntity.setProperty("imgUrl", user.getImg());
-   userEntity.setProperty("teamId", user.getTeamId());
+   userEntity.setProperty("teamId", user.getTeamId().toString());
    userdatastore.put(userEntity);
   }
   

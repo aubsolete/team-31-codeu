@@ -34,4 +34,14 @@ public class AdminTeamListServlet extends HttpServlet {
     String json = gson.toJson(teams);
     response.getOutputStream().println(json);
   }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+          throws IOException {
+    response.setContentType("application/json");
+    String cohortId = request.getParameter("cohortId");
+    String teamName = request.getParameter("teamName");
+    Team team = datastore.create(new Team(cohortId, teamName, "", "", ""));
+    response.getOutputStream().println(new Gson().toJson(team));
+  }
 }

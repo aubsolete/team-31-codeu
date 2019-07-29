@@ -4,7 +4,6 @@ import com.google.appengine.api.datastore.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashSet;
 
 public class CohortDatastore {
 
@@ -32,7 +31,7 @@ public class CohortDatastore {
     }
 
     public Cohort edit(Cohort cohort) {
-        Cohort old = getById(cohort.getCohortID().toString());
+        Cohort old = getById(cohort.getCohortId().toString());
         if (old == null) {
             // Throw some error on front end.
             return null;
@@ -44,7 +43,7 @@ public class CohortDatastore {
     }
 
     public Entity getEntity(Cohort cohort) {
-        Entity cohortEntity = new Entity("Cohort", cohort.getCohortID().toString());
+        Entity cohortEntity = new Entity("Cohort", cohort.getCohortId().toString());
         cohortEntity.setProperty("cohortName", cohort.getCohortName());
         return cohortEntity;
     }
