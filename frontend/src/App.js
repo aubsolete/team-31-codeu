@@ -101,6 +101,7 @@ class App extends React.Component {
                 <Route path="/team/:teamId" exact component={AdminUserListView} />
                 <Route path="/cohort/:cohortId" exact component={AdminTeamListView} />
                 <Route path="/image-upload" component={ImageUploadTest}/>
+                <Route path="/:userId" component={UserDetailView} />
             </div>
         </Router>
     );
