@@ -15,14 +15,14 @@ class AdminTeamListView extends React.Component {
     }
 
     render() {
-        if (this.state.teams == null) {
-            return (<div> loading teams</div>);
-        }
+        //if (this.state.teams == null) {
+        //    return (<div> loading teams</div>);
+        //}
         return (
             <div>
                 <div>
-                    <textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
-                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> submit </button>
+                    <TextArea value={this.state.text} onChange={this.onTextChange.bind(this)}></TextArea>
+                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> Submit </button>
                 </div>
                 <div className="team-container">
                     {this.state.teams.length === 0 && (<p> There are no teams yet </p>)}
