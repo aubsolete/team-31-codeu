@@ -5,68 +5,71 @@ class TeamDetailView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            teamId: '',
-            cohortId: '',
-            teamName: '',
-            projectName: '',
-            projectDescription: '',
-            githubLink: ''
-            /* would having number editors (the team members) be a good way to know who can edit? */
+            team: null,
+            users: null
         }
     };
 
     render() {
-        // How does the page know a team member is on it, or a random viewer is on it?
+        let {team,users} = this.state;
+        if(!team) {
+            return (<p> Team is loading... </p>)
+        }
         return(
+          <div>
             <h1>
-                <TextArea value={this.state.text} placeholder={"Team Name"} onChange={this.onTeamNameChange.bind(this)}></TextArea>
-                <button onClick={this.onButtonClick.bind(this)} /*disabled={this.state.teamName.length === ''}*/> Edit Team Name </button>
+                {team.teamName}
             </h1>
-            <div>
-                <TextArea value={this.state.text} placeholder={"Project Name"} onChange={this.onProjectNameChange.bind(this)}></TextArea>
-                <button onClick={this.onButtonClick.bind(this)} /*disabled={this.state.projectName.length === ''}*/> Edit Project Name </button>
-                <div>
-                    <TextArea value={this.state.text} placeholder={"There is no project description yet." onChange={this.onProjectDescChange.bind(this)}></TextArea>
-                    <button onClick={this.onButtonClick.bind(this)} /*disabled={this.state.projectDescription.length === ''}*/> Edit Project Description </button>
-                </div>
-                // make link, not just text
-                <TextArea value={this.state.text} placeholder={"Github Link"} onChange={this.onGithubLinkChange.bind(this)}></TextArea>
-                <button onClick={this.onButtonClick.bind(this)} /*disabled={this.state.githubLink.length === ''}*/> Edit Github Link </button>
-            </div>
-            <div key={team.teamId}>
-                <li>
-                    // Double check this (list of team members)
-                    // Might need to use UserListServlet?
-                    <Link to={`/user/${user.userId}`}> {user.userName} </Link>
-                </li>
-            </div>
+            <form>
+                <input value={team.projectName} placeholder="Project Name" onChange={this.onProjectNameChange.bind(this)}></input>
+                <textarea value={team.projectDescription} placeholder="There is no project description yet." onChange={this.onProjectDescChange.bind(this)}></textarea>
+                <input value={team.githubLink} placeholder="Github Link" onChange={this.onGithubLinkChange.bind(this)}></input>
+                <button onClick={this.onButtonClick.bind(this)}> Edit Project </button>
+            </form>
+            <ul>
+                {users.map((user) =>
+                    <div key={user.userId}>
+                        <img src={user.imgUrl} alt="User"/>
+                        <Link to={`/user/${user.userId}`}> {user.firstName} {user.lastName} </Link>
+                        <p> {user.aboutMe} </p>
+                    </div>
+                )};
+            </ul>
+          </div>
         );
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        fetch(`/team?teamId={this.props.match.params.teamId}`)
+            .then((response) => response.json())
+            .then((team) => {
+                this.setState({team});
+                fetch(`/admin-user-list?teamId={team.teamId}`)
+                    .then((response) => response.json())
+                    .then((users) => this.setState({users}));
+            });
+    }
 
     //
     // Information Changers
     //
-    onTeamNameChange(event) {
-        event.preventDefault();
-        this.setState({teamName: event.target.value});
-    }
-
     onProjectNameChange(event) {
         event.preventDefault();
-        this.setState({projectName: event.target.value});
+        var team = Object.assign(this.state.team, {projectName: event.target.value});
+        this.setState({team});
     }
 
     onProjectDescChange(event) {
         event.preventDefault();
-        this.setState({projectDescription: event.target.value});
+        var team = Object.assign(this.state.team, {projectDescription: event.target.value});
+        this.setState({team});
     }
 
     onGithubLinkChange(event) {
         event.preventDefault();
-        this.setState({githubLink: event.target.value});
+        var team = Object.assign(this.state.team, {githubLink: event.target.value});
+        this.setState({team});
     }
 }
 
-export default TeamDetailView
+export default TeamDetailView;

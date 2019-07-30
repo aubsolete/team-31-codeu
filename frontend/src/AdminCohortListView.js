@@ -11,13 +11,13 @@ class AdminCohortListView extends React.Component {
     }
 
     render() {
-        //if (this.state.cohorts == null) {
-        //    return (<div> loading cohorts</div>);
-        //}
+        if (this.state.cohorts == null) {
+            return (<div> loading cohorts</div>);
+        }
         return (
             <div>
                 <div>
-                    <TextArea value={this.state.cohortName} onChange={this.onCohortNameChange.bind(this)}></TextArea>
+                    <textarea value={this.state.cohortName} onChange={this.onCohortNameChange.bind(this)}></textarea>
                     <button onClick={this.onButtonClick.bind(this)} disabled={this.state.cohortName.length === ''}> Submit </button>
                 </div>
                 <div>

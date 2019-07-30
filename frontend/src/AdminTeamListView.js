@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 /**
  * A component that displays a list of all the messages in our application.
@@ -15,13 +16,13 @@ class AdminTeamListView extends React.Component {
     }
 
     render() {
-        //if (this.state.teams == null) {
-        //    return (<div> loading teams</div>);
-        //}
+        if (this.state.teams == null) {
+            return (<div> loading teams</div>);
+        }
         return (
             <div>
                 <div>
-                    <TextArea value={this.state.text} onChange={this.onTextChange.bind(this)}></TextArea>
+                    <textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
                     <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> Submit </button>
                 </div>
                 <div className="team-container">
@@ -30,7 +31,7 @@ class AdminTeamListView extends React.Component {
                         <div key={team.teamId} className="team-div">
                             <div className="team-body">
                                 <li>
-                                    <Link to=`/team/${team.cohortId}/${team.teamId}`> {team.teamName} </Link>
+                                    <Link to={`/admin-team/${team.teamId}`}> {team.teamName} </Link>
                                 </li>
                             </div>
                         </div>

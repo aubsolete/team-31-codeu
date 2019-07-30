@@ -4,13 +4,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Feed from './Feed';
 import AdminTeamListView from './AdminTeamListView';
 import AdminUserListView from './AdminUserListView';
-<<<<<<< Updated upstream
-=======
 import AdminCohortListView from './AdminCohortListView';
-import ImageUploadTest from "./ImageUploadTest";
 import TeamDetailView from "./TeamDetailView";
-import SelectCohortView from "./SelectCohortView"
->>>>>>> Stashed changes
+import SelectCohortView from "./SelectCohortView";
 
 /**
  * The core building block of React is a component. A component can be declared two different ways.
@@ -102,14 +98,11 @@ class App extends React.Component {
                 <Route path="/" exact component={Index} />
                 <Route path="/about/" component={About} />
                 <Route path="/feed/" component={Feed} />
-                <Route path="/team/:cohortId/:teamId" exact component={AdminUserListView} />
+                <Route path="/admin-team/:teamId" exact component={AdminUserListView} />
                 <Route path="/cohort/:cohortId" exact component={AdminTeamListView} />
-<<<<<<< Updated upstream
-=======
-                <Route path="/image-upload" component={ImageUploadTest}/>
-                <Route path="/:teamId" component={TeamDetailView}/>
+                <Route path="/cohort" component={AdminCohortListView} />
+                <Route path="/team/:teamId" component={TeamDetailView}/>
                 <Route path="/select-cohort" component={SelectCohortView}/>
->>>>>>> Stashed changes
             </div>
         </Router>
     );
