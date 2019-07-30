@@ -1,7 +1,6 @@
 package com.google.codeu.data;
 
 import java.util.*;
-import java.util.UUID;
 
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -17,7 +16,7 @@ public class TeamDatastore {
     // Create runs as though all the team information has been set already.
     public Team create(Team team) {
         Entity teamEntity = getEntity(team);
-        teamEntity.setProperty("cohortID", team.getCohortID());
+        teamEntity.setProperty("cohortId", team.getCohortId().toString());
         teamDatastore.put(teamEntity);
         return team;
     }
@@ -33,7 +32,7 @@ public class TeamDatastore {
     }
 
     public Team edit(Team team) {
-        Team old = getById(team.getTeamID().toString());
+        Team old = getById(team.getTeamId().toString());
         if (old == null) {
             // Throw some error on front end.
             return null;
@@ -48,7 +47,7 @@ public class TeamDatastore {
     }
 
     public Entity getEntity(Team team) {
-        Entity teamEntity = new Entity("Team", team.getTeamID().toString());
+        Entity teamEntity = new Entity("Team", team.getTeamId().toString());
         teamEntity.setProperty("teamName", team.getTeamName());
         teamEntity.setProperty("projectName", team.getProjectName());
         teamEntity.setProperty("projectDesc", team.getProjectDesc());
@@ -58,7 +57,7 @@ public class TeamDatastore {
 
     public Team getTeam(Entity teamEntity) {
         String teamID = teamEntity.getKey().getName();
-        String cohortID = (String) teamEntity.getProperty("cohortID");
+        String cohortID = (String) teamEntity.getProperty("cohortId");
         String teamName = (String) teamEntity.getProperty("teamName");
         String projectName = (String) teamEntity.getProperty("projectName");
         String projectDesc = (String) teamEntity.getProperty("projectDesc");

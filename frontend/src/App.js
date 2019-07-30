@@ -7,6 +7,7 @@ import AdminUserListView from './AdminUserListView';
 import AdminCohortListView from './AdminCohortListView';
 import TeamDetailView from "./TeamDetailView";
 import SelectCohortView from "./SelectCohortView";
+import ImageUploadTest from "./ImageUploadTest";
 
 /**
  * The core building block of React is a component. A component can be declared two different ways.
@@ -101,8 +102,9 @@ class App extends React.Component {
                 <Route path="/admin-team/:teamId" exact component={AdminUserListView} />
                 <Route path="/cohort/:cohortId" exact component={AdminTeamListView} />
                 <Route path="/cohort" component={AdminCohortListView} />
-                <Route path="/team/:teamId" component={TeamDetailView}/>
-                <Route path="/select-cohort" component={SelectCohortView}/>
+                <Route path="/team/:teamId" component={TeamDetailView} />
+                <Route path="/select-cohort" component={SelectCohortView} />
+                <Route path="/image-upload" component={ImageUploadTest} />
             </div>
         </Router>
     );

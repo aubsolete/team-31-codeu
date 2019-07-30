@@ -15,22 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/create-user")
-public class CreateUserServlet {
+public class CreateUserServlet extends HttpServlet {
     private UserDatastore userDatastore;
 
     public void init() {
         userDatastore = new UserDatastore();
     }
 
-   public void doPost (ServletRequest request, HttpServletResponse response) throws IOException {
+   @Override
+   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a team.
-        String cohortID = request.getParameter("cohortId");
         String teamId = request.getParameter("teamId");
         String email = request.getParameter("email");
         
        // You can add a constructor that only requires the email and teamId.
         userDatastore.storeUser(new User(email, teamId));
-
     }
 }

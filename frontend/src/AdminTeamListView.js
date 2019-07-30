@@ -61,7 +61,7 @@ class AdminTeamListView extends React.Component {
 
     onButtonClick(event) {
         event.preventDefault();
-        fetch(`/team?cohortId=${this.props.match.params.cohortId}&teamName=${this.state.text}&projectName=""&projectDesc=""&githubLink=""&emails=[]`, {method: 'POST'})
+        fetch(`/admin-team-list?cohortId=${this.props.match.params.cohortId}&teamName=${this.state.text}`, {method: 'POST'})
             .then((response) => this.getTeams()) 
             .catch(() => alert('Unable to upload the team. An error occured.'));
     }
