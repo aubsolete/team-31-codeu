@@ -6,6 +6,7 @@ import AdminTeamListView from './AdminTeamListView';
 import AdminUserListView from './AdminUserListView';
 import AdminCohortListView from './AdminCohortListView';
 import ImageUploadTest from "./ImageUploadTest";
+import UserDetailView from './UserDetailView';
 
 /**
  * The core building block of React is a component. A component can be declared two different ways.

@@ -9,26 +9,33 @@ class UserDetailView extends React.Component {
 	
 	    // This is a stateful component so we need to define a default representation of our state
 	    this.state = {
-	    	  firstName: '',
-	        lastName: '',
-	        imgUrl: '',
-	        description: '',
-	        email: '',
-	        team: '',
+	    	  user: null,
 	        action: '',
-	        owner: false,
-          file: null
+	        currentUser: null,
+	        file: null
 	    };
     }
 
   /* This lifecycle hook gets executed when the component mounts */
 
-  handleInput(event) {
+  handleFirstName(event) {
     event.preventDefault();
-    let name = event.target.name;
-    this.setState({name: event.target.value}); //I'm not sure if this works. I want to pass the name of the field from the input to setState
+    let newUser = Object.assign({}, this.state.user, {firstName: event.target.value});
+    this.setState({user: newUser});
   }
 
+  handleLastName(event) {
+    event.preventDefault();
+    let newUser = Object.assign({}, this.state.user, {lastName: event.target.value});
+    this.setState({user: newUser});
+  }
+  
+  handleAboutMe(event) {
+    event.preventDefault();
+    let newUser = Object.assign({}, this.state.user, {aboutMe: event.target.value});
+    this.setState({user: newUser});
+  }
+  
   onFileUpload(event) {
         this.setState({file: event.target.files[0]});
   }
@@ -49,8 +56,9 @@ class UserDetailView extends React.Component {
                 return response.text();
             })
             .then((imgUrl) => {
-                // Update the state with the image URL so that the image will be displayed.
-                this.setState({imgUrl});
+                let newUser = Object.assign({}, this.state.user, {imgUrl: event.target.value});
+                this.setState({user: newUser});
+                return this.handleFormSubmit(event);
             }).catch((error) => {
                 alert('unable to upload image');
         });
@@ -58,15 +66,9 @@ class UserDetailView extends React.Component {
 
   handleFormSubmit(event) {
     event.preventDefault();
-    let userData = this.state.newUser;
-
-    fetch("http://example.com", {
+    let {firstName, lastName, imgUrl, aboutMe} = this.state.user;
+    return fetch(`/about?userId=${this.props.match.params.userId}&firstName=${firstName}&lastName=${lastName}&imgUrl=${imgUrl}&aboutMe=${aboutMe}`, {
       method: "POST",
-      body: JSON.stringify(userData),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
     }).then(response => {
       response.json().then(data => {
         console.log("Successful" + data);
@@ -75,37 +77,60 @@ class UserDetailView extends React.Component {
   }
 //<textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
   render() {
-    //owner = {this.props.match.params.userId} == current user I DON'T KNOW HOW TO GET THE ID OF THE CURRENT USER
+    if (this.state.user == null) {
+            return (<div> loading user</div>);
+        }
+    if (this.state.currentUser == null) {
+            return (<div> checking current user</div>);
+        }
+    let notOwner = this.state.currentUser.id !== this.state.user.id;
     return (
       <div>
         <form action={this.state.action}
               method="POST"
               encType="multipart/form-data"
-              onSubmit={this.handleFormSubmit.bind(this)}>
+              onSubmit={this.handleImg.bind(this)}>
+        {this.state.imgUrl != null && <img alt="user profile" src={this.state.imgUrl}></img>}
         <div>
-            <input inputType={"text"} title={"First name"} name={"firstName"} value={this.state.firstName} onChange={this.handleInput.bind(this)}></input> 
-            <input inputType={"text"} title={"Last name"} name="lastName" value={this.state.lastName} onChange={this.handleInput.bind(this)}></input>  
-        </div>
-        <div>
-        <input type="file" name="image" onChange={this.handleImg.bind(this)}></input>
-        </div>
-        <div>
-          <TextArea title={"About"} value={this.state.description} name={"description"} handleChange={this.handleInput} placeholder={"Tell us about you"}></input> 
-        </div>
-        <div>
-          <button action={this.handleFormSubmit.bind(this)} type={"primary"} title={"Submit"} style={buttonStyle} disabled = !(owner)></button> 
+        <input type="file" name="image" onChange={this.handleImg.bind(this)} disabled = {this.state.currentUser.id !== this.state.user.id}></input>
         </div>
         </form>
-        {this.state.imgUrl != null && <img alt="user profile" src={this.state.imgUrl}></img>}
+        <form method="POST"
+              encType="multipart/form-data"
+              onSubmit={this.handleFormSubmit.bind(this)}>
+        <fieldset disabled = {this.state.currentUser.id !== this.state.user.id}>
+        <div>
+            <input inputType="text" title="First name" value={this.state.user.firstName} onChange={this.handleFirstName.bind(this)}></input> 
+            <input inputType="text" title="Last name" value={this.state.user.lastName} onChange={this.handleLastName.bind(this)}></input>
+            <input inputType="text" title="Email" value={this.state.user.email} disabled = {true}></input>
+        </div>
+        <div>
+          <textarea title="About" value={this.state.user.aboutMe} handleChange={this.handleAboutMe.bind(this)} placeholder="Tell us about you"></textarea> 
+        </div>
+        <div>
+          <button type={"primary"} title={"Submit"} disabled = {notOwner}></button> 
+        </div>
+        </fieldset>
+        </form>
       </div>
     );
   }
   componentDidMount() {
         // Fetch the url that we are going to submit the image to.
-        fetch('/blobstore-upload-url') //DOES THIS ACCOUNT FOR THE ENTIRE FORM OR JUST THE IMG
+        fetch(`/login-status`)
+            .then((response) => response.json())
+            .then((currentUser) => {
+                this.setState({currentUser});
+            });
+        fetch(`/blobstore-upload-url`) 
             .then((response) => response.text())
             .then((action) => {
                 this.setState({action});
+            });
+        fetch(`/about`)
+            .then((response) => response.json())
+            .then((user) => {
+                this.setState({user});
             });
   }
 }
