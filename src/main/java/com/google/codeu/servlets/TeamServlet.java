@@ -26,14 +26,14 @@ public class TeamServlet extends HttpServlet {
     // Note by Faisal: return a specific Team or list of Teams depending on the parameters in the request.
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String teamID = request.getParameter("teamID"); // Fetch the team's id.
-        if (teamID == null || teamID.equals("")) {     // Request is empty...
+        String teamId = request.getParameter("teamId"); // Fetch the team's id.
+        if (teamId == null || teamId.equals("")) {     // Request is empty...
             response.getWriter().println("[]");        // ...return empty array.
             return;
         }
 
         // Fetch the team tied to the id from the datastore.
-        Team team = teamDatastore.getById(teamID);
+        Team team = teamDatastore.getById(teamId);
         if(team == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
@@ -48,7 +48,7 @@ public class TeamServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a team.
-        String cohortID = request.getParameter("cohortID");
+        String cohortId = request.getParameter("cohortId");
         String teamName = request.getParameter("teamName");
         String projectName = request.getParameter("projectName");
         String projectDesc = request.getParameter("projectDesc");
@@ -56,7 +56,7 @@ public class TeamServlet extends HttpServlet {
         String[] emailList = request.getParameter("emails").split(",");
 
         // Create a new Team with the acquired data.
-        Team team = teamDatastore.create(new Team(cohortID, teamName, projectName, projectDesc, githubLink));
+        Team team = teamDatastore.create(new Team(cohortId, teamName, projectName, projectDesc, githubLink));
         for (String email : emailList) {
         	User user = new User(email, team.getTeamId().toString());
         	userDatastore.storeUser(user);
@@ -69,15 +69,15 @@ public class TeamServlet extends HttpServlet {
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         // Acquire all of the data needed for a team.
-        String teamID = request.getParameter("teamID");
-        String cohortID = request.getParameter("cohortID");
+        String teamId = request.getParameter("teamId");
+        String cohortId = request.getParameter("cohortId");
         String teamName = request.getParameter("teamName");
         String projectName = request.getParameter("projectName");
         String projectDesc = request.getParameter("projectDesc");
         String githubLink = request.getParameter("githubLink");
 
         // Edit an existing team with the acquired data.
-        Team team = teamDatastore.edit(new Team(teamID, cohortID, teamName, projectName, projectDesc, githubLink));
+        Team team = teamDatastore.edit(new Team(teamId, cohortId, teamName, projectName, projectDesc, githubLink));
 
         // Team is set, now return it.
         response.getWriter().println(new Gson().toJson(team));

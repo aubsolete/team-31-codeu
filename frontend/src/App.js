@@ -5,6 +5,8 @@ import Feed from './Feed';
 import AdminTeamListView from './AdminTeamListView';
 import AdminUserListView from './AdminUserListView';
 import AdminCohortListView from './AdminCohortListView';
+import TeamDetailView from "./TeamDetailView";
+import SelectCohortView from "./SelectCohortView";
 import ImageUploadTest from "./ImageUploadTest";
 import UserDetailView from './UserDetailView';
 
@@ -98,11 +100,13 @@ class App extends React.Component {
                 <Route path="/" exact component={Index} />
                 <Route path="/about/" component={About} />
                 <Route path="/feed/" component={Feed} />
-                <Route path="/cohort" exact component={AdminCohortListView} />
-                <Route path="/team/:teamId" exact component={AdminUserListView} />
+                <Route path="/admin-team/:teamId" exact component={AdminUserListView} />
                 <Route path="/cohort/:cohortId" exact component={AdminTeamListView} />
-                <Route path="/image-upload" component={ImageUploadTest}/>
-                <Route path="/:userId" component={UserDetailView} />
+                <Route path="/user/:userId" component={UserDetailView} />
+                <Route path="/cohort" component={AdminCohortListView} />
+                <Route path="/team/:teamId" component={TeamDetailView} />
+                <Route path="/select-cohort" component={SelectCohortView} />
+                <Route path="/image-upload" component={ImageUploadTest} />
             </div>
         </Router>
     );
