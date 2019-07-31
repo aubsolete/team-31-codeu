@@ -23,7 +23,7 @@ class AdminTeamListView extends React.Component {
             <div>
                 <div>
                     <textarea value={this.state.text} onChange={this.onTextChange.bind(this)}></textarea>
-                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> submit </button>
+                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.text.length === ''}> Submit </button>
                 </div>
                 <div className="team-container">
                     {this.state.teams.length === 0 && (<p> There are no teams yet </p>)}
@@ -31,7 +31,7 @@ class AdminTeamListView extends React.Component {
                         <div key={team.teamId} className="team-div">
                             <div className="team-body">
                                 <li>
-                                    <Link to={`/team/${team.teamId}`}> {team.teamName} </Link>
+                                    <Link to={`/admin-team/${team.teamId}`}> {team.teamName} </Link>
                                 </li>
                             </div>
                         </div>

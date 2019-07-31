@@ -17,10 +17,8 @@ class AdminCohortListView extends React.Component {
         return (
             <div>
                 <div>
-                    <textarea value={this.state.text} onChange={this.onCohortNameChange.bind(this)}></textarea>
-                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.cohortName.length === ''}>
-                        submit
-                    </button>
+                    <textarea value={this.state.cohortName} onChange={this.onCohortNameChange.bind(this)}></textarea>
+                    <button onClick={this.onButtonClick.bind(this)} disabled={this.state.cohortName.length === ''}> Submit </button>
                 </div>
                 <div>
                     {this.state.cohorts.length === 0 && (<p> There are no cohorts yet </p>)}
