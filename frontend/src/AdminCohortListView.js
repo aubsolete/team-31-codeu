@@ -23,7 +23,7 @@ class AdminCohortListView extends React.Component {
                 <div>
                     {this.state.cohorts.length === 0 && (<p> There are no cohorts yet </p>)}
                     {this.state.cohorts.map((cohort) =>
-                        <div key={cohort.cohortID}>
+                        <div key={cohort.cohortId}>
                             <div>
                                 <li>
                                     <Link to={`/cohort/${cohort.cohortId}`}> {cohort.cohortName} </Link>
