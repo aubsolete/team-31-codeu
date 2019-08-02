@@ -13,16 +13,24 @@ class SelectCohortView extends React.Component {
     };
 
     render() {
+        let {teams, cohorts} = this.state;
+        if (cohorts === null) {
+            return <div> Loading cohorts...</div>
+        }
+
+        if (cohorts.length === 0) {
+            return <div> no cohorts to select</div>
+        }
         return (
           <div>
             <select value={this.state.selectedCohort} onChange={this.onChangeCohortId.bind(this)}>
-                { this.state.cohorts.map((cohort) =>
+                { cohorts.map((cohort) =>
                     <option value={cohort.cohortId}> {cohort.cohortName} </option>
                 )};
             </select>
             <div>
-                {this.state.teams === null && (<p> There are no teams yet </p>)}
-                {this.state.teams.map((team) =>
+                {teams === null && (<p> There are no teams yet </p>)}
+                {teams != null && teams.map((team) =>
                     <div key={team.teamId}>
                         <div>
                             <li>
@@ -36,7 +44,14 @@ class SelectCohortView extends React.Component {
         );
     }
 
+    componentDidMount() {
+        fetch('/cohort-list')
+            .then((response) => response.json())
+            .then((cohorts) => this.setState({cohorts}));
+    }
+
     onChangeCohortId(event) {
+        console.log(event.target.value);
         this.setState({selectedCohortId: event.target.value});
         this.getThisCohortsTeams(event.target.value);
     }
